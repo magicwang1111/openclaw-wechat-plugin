@@ -1,0 +1,40 @@
+{
+  "name": "openclaw-wechat-plugin",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "openclaw WeCom (企业微信) integration plugin",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "openclaw",
+    "wecom",
+    "wechat",
+    "enterprise"
+  ],
+  "author": "magicwang1111",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/magicwang1111/openclaw-wechat-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/magicwang1111/openclaw-wechat-plugin/issues"
+  },
+  "homepage": "https://github.com/magicwang1111/openclaw-wechat-plugin#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "dependencies": {
+    "fast-xml-parser": "^4.3.4"
+  },
+  "peerDependencies": {
+    "openclaw": "^2026.2.1"
+  }
+}

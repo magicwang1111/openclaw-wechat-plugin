@@ -1,0 +1,11 @@
+{
+  "id": "simple-wecom",
+  "channels": ["simple-wecom"],
+  "skills": ["./skills"],
+  "extensions": ["./index.ts"],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  }
+}

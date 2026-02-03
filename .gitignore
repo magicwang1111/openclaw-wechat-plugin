@@ -1,0 +1,7 @@
+node_modules/
+*.tar.gz
+src/*.bak.*
+src/*.dbg*
+src/*.fixparse*
+src/*.routeA*
+node_modules
