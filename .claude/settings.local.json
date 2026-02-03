@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm whoami)",
+      "Bash(npm publish)",
+      "Bash(scp:*)",
+      "Bash(tar:*)",
+      "Bash(npm install)",
+      "Bash(test:*)",
+      "Bash(grep:*)"
+    ]
+  }
+}
