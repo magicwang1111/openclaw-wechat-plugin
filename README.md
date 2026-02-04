@@ -5,8 +5,9 @@
 ## 安装
 
 ```bash
-# 示例：
-# openclaw plugins install <你的发布包名>
+# 安装发布包（GitHub 仓库名）
+openclaw plugins install magicwang1111/openclaw-wechat-plugin
+
 # 或直接从源码目录加载（取决于你的 OpenClaw 插件加载方式）
 ```
 
