@@ -1,6 +1,6 @@
 {
-  "id": "simple-wecom",
-  "channels": ["simple-wecom"],
+  "id": "openclaw-wechat-plugin",
+  "channels": ["openclaw-wechat"],
   "skills": ["./skills"],
   "extensions": ["./index.ts"],
   "configSchema": {

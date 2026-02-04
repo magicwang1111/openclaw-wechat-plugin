@@ -4,9 +4,9 @@ import { simpleWecomPlugin } from "./src/channel.js";
 import { setSimpleWecomRuntime } from "./src/runtime.js";
 
 const plugin = {
-  id: "simple-wecom",
-  name: "Simple WeCom",
-  description: "Generic HTTP-based WeCom integration",
+  id: "openclaw-wechat-plugin",
+  name: "OpenClaw WeChat",
+  description: "WeCom (WeChat Work) integration for OpenClaw",
   configSchema: emptyPluginConfigSchema(),
   register(api: openclawPluginApi) {
     setSimpleWecomRuntime(api.runtime);

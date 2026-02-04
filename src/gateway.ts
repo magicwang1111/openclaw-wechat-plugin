@@ -94,9 +94,9 @@ export function startSimpleWecomAccount(ctx: ChannelGatewayContext) {
   const config = ctx.account.config as any;
 
   const unregisterMessage = registerPluginHttpRoute({
-    pluginId: "simple-wecom",
+    pluginId: "openclaw-wechat",
     accountId,
-    path: "/simple-wecom/message",
+    path: "/openclaw-wechat/message",
     handler: async (req, res) => {
       const url = new URL(req.url || "", `http://${req.headers.host}`);
 
@@ -179,9 +179,9 @@ export function startSimpleWecomAccount(ctx: ChannelGatewayContext) {
   });
 
   const unregisterPoll = registerPluginHttpRoute({
-    pluginId: "simple-wecom",
+    pluginId: "openclaw-wechat",
     accountId,
-    path: "/simple-wecom/messages",
+    path: "/openclaw-wechat/messages",
     handler: async (req, res) => {
       if (req.method !== "GET") {
         res.statusCode = 405;
@@ -300,7 +300,7 @@ async function handleEncryptedWeComMessage(
     res.statusCode = 200;
     res.setHeader("Content-Type", "text/plain");
     res.end("success");
-    console.error("[simple-wecom] parseWeComMessage failed:", e);
+    console.error("[openclaw-wechat] parseWeComMessage failed:", e);
     return;
   }
 
@@ -314,7 +314,7 @@ async function handleEncryptedWeComMessage(
     res.setHeader("Content-Type", "text/plain");
     res.end("success");
 
-    ctx.log?.info?.("[simple-wecom] ignore event message", JSON.stringify({
+    ctx.log?.info?.("[openclaw-wechat] ignore event message", JSON.stringify({
       FromUserName: wecomMessage?.FromUserName,
       Event: wecomMessage?.Event,
       EventKey: wecomMessage?.EventKey
@@ -333,13 +333,13 @@ async function handleEncryptedWeComMessage(
     res.end("success");
 
     if (!mediaId || !fromUser) {
-      ctx.log?.warn?.("[simple-wecom] image message missing MediaId/FromUserName");
+      ctx.log?.warn?.("[openclaw-wechat] image message missing MediaId/FromUserName");
       return;
     }
 
-    const key = makeDedupeKey(["simple-wecom", accountId, fromUser, mediaId]);
+    const key = makeDedupeKey(["openclaw-wechat", accountId, fromUser, mediaId]);
     if (uploadDedupe.seen(key)) {
-      ctx.log?.info?.("[simple-wecom] skip duplicate image", key);
+      ctx.log?.info?.("[openclaw-wechat] skip duplicate image", key);
       return;
     }
 
@@ -384,8 +384,8 @@ async function handleEncryptedWeComMessage(
         encodingAESKey: config.encodingAESKey,
       });
     } catch (e) {
-      console.error("[simple-wecom] image download/save failed:", e);
-      ctx.log?.error?.("[simple-wecom] image download/save failed", String(e));
+      console.error("[openclaw-wechat] image download/save failed:", e);
+      ctx.log?.error?.("[openclaw-wechat] image download/save failed", String(e));
     }
 
     return;
@@ -395,7 +395,7 @@ async function handleEncryptedWeComMessage(
   const { text, mediaUrls } = formatMessageForopenclaw(wecomMessage);
   const userId = wecomMessage.FromUserName;
 
-  console.log("=== Simple WeCom Context to Agent ===");
+  console.log("=== OpenClaw WeChat Context to Agent ===");
   console.log("From:", userId);
   console.log("Body:", text);
   console.log("MediaUrls:", mediaUrls);
@@ -416,7 +416,7 @@ async function handleEncryptedWeComMessage(
       From: userId,
       Body: text,
       AccountId: accountId,
-      SessionKey: `simple-wecom:${accountId}:${userId}`,
+      SessionKey: `openclaw-wechat:${accountId}:${userId}`,
       MediaUrls: mediaUrls,
       GroupSystemPrompt: systemPrompt,
     },
@@ -424,7 +424,7 @@ async function handleEncryptedWeComMessage(
     dispatcherOptions: {
       responsePrefix: "",
       deliver: async (payload) => {
-        console.log("=== Simple WeCom Deliver Payload ===");
+        console.log("=== OpenClaw WeChat Deliver Payload ===");
         console.log("Text:", payload.text);
         console.log("MediaUrl:", payload.mediaUrl);
         console.log("================================");
@@ -593,8 +593,8 @@ async function handleEncryptedWeComMessage(
 
   // 不 await：请求已结束，别阻塞 handler
   void dispatchReplyFromConfig(args).catch((e) => {
-    console.error("[simple-wecom] dispatch crashed:", e);
-    ctx.log?.error?.("[simple-wecom] dispatch crashed", String(e));
+    console.error("[openclaw-wechat] dispatch crashed:", e);
+    ctx.log?.error?.("[openclaw-wechat] dispatch crashed", String(e));
   });
 }
 
@@ -637,7 +637,7 @@ async function handleLegacyMessage(
     sync = result.fields.sync === "true";
 
     for (const file of result.files) {
-      const tempPath = join(tmpdir(), `simple-wecom-${randomUUID()}-${file.filename}`);
+      const tempPath = join(tmpdir(), `openclaw-wechat-${randomUUID()}-${file.filename}`);
       await writeFile(tempPath, file.data);
       files.push({
         filename: file.filename,
@@ -673,7 +673,7 @@ async function handleLegacyMessage(
     }
   }
 
-  console.log("=== Simple WeCom Context to Agent ===");
+  console.log("=== OpenClaw WeChat Context to Agent ===");
   console.log("From:", email);
   console.log("Body:", enrichedText);
   console.log("MediaUrls:", mediaUrls);
@@ -690,7 +690,7 @@ async function handleLegacyMessage(
       From: email,
       Body: enrichedText,
       AccountId: accountId,
-      SessionKey: `simple-wecom:${accountId}:${email}`,
+      SessionKey: `openclaw-wechat:${accountId}:${email}`,
       MediaUrls: mediaUrls.length > 0 ? mediaUrls : undefined,
       GroupSystemPrompt: systemPrompt,
     },
@@ -698,7 +698,7 @@ async function handleLegacyMessage(
     dispatcherOptions: {
       responsePrefix: "",
       deliver: async (payload) => {
-        console.log("=== Simple WeCom Deliver Payload ===");
+        console.log("=== OpenClaw WeChat Deliver Payload ===");
         console.log("Text:", payload.text);
         console.log("MediaUrl:", payload.mediaUrl);
         console.log("================================");
@@ -731,7 +731,7 @@ async function handleLegacyMessage(
 
   // legacy 这里也别 await：同步/异步两种场景都更稳
   void dispatchReplyFromConfig(args).catch((e) => {
-    console.error("[simple-wecom] legacy dispatch crashed:", e);
-    ctx.log?.error?.("[simple-wecom] legacy dispatch crashed", String(e));
+    console.error("[openclaw-wechat] legacy dispatch crashed:", e);
+    ctx.log?.error?.("[openclaw-wechat] legacy dispatch crashed", String(e));
   });
 }

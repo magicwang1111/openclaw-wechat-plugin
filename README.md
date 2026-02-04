@@ -22,11 +22,11 @@ openclaw plugins enable openclaw-wechat-plugin
 
 ```bash
 # 企业微信应用配置（必需）
-openclaw config set channels.simple-wecom.corpid "ww1234567890abcdef"
-openclaw config set channels.simple-wecom.corpsecret "your-corp-secret"
-openclaw config set channels.simple-wecom.token "your-token"
-openclaw config set channels.simple-wecom.encodingAESKey "your-aes-key"
-openclaw config set channels.simple-wecom.enabled true
+openclaw config set channels.openclaw-wechat.corpid "ww1234567890abcdef"
+openclaw config set channels.openclaw-wechat.corpsecret "your-corp-secret"
+openclaw config set channels.openclaw-wechat.token "your-token"
+openclaw config set channels.openclaw-wechat.encodingAESKey "your-aes-key"
+openclaw config set channels.openclaw-wechat.enabled true
 ```
 
 ### 3. 配置 Gateway
@@ -68,7 +68,7 @@ openclaw channels status
 在企业微信管理后台，配置应用回调 URL：
 
 ```
-http://your-gateway-host:18789/simple-wecom/message
+http://your-gateway-host:18789/openclaw-wechat/message
 ```
 
 ## 功能特性

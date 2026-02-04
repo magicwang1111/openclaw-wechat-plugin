@@ -14,11 +14,11 @@ type SimpleWecomConfig = z.infer<typeof SimpleWecomConfigSchema>;
 type ResolvedSimpleWecomAccount = ResolvedChannelAccount<SimpleWecomConfig>;
 
 export const simpleWecomPlugin: ChannelPlugin<ResolvedSimpleWecomAccount> = {
-  id: "simple-wecom",
+  id: "openclaw-wechat",
   meta: {
-    id: "simple-wecom",
-    name: "Simple WeCom",
-    description: "Generic HTTP WeCom Integration",
+    id: "openclaw-wechat",
+    name: "OpenClaw WeChat",
+    description: "WeCom (WeChat Work) integration for OpenClaw",
     hidden: false,
     quickstartAllowFrom: true,
   },
@@ -31,7 +31,7 @@ export const simpleWecomPlugin: ChannelPlugin<ResolvedSimpleWecomAccount> = {
   configSchema: buildChannelConfigSchema(SimpleWecomConfigSchema),
   config: {
     listAccountIds: (cfg) => {
-        const accounts = cfg.channels?.["simple-wecom"]?.accounts;
+        const accounts = cfg.channels?.["openclaw-wechat"]?.accounts;
         const ids = accounts ? Object.keys(accounts) : [];
         if (ids.length === 0 || !ids.includes(DEFAULT_ACCOUNT_ID)) {
              ids.unshift(DEFAULT_ACCOUNT_ID);
@@ -39,7 +39,7 @@ export const simpleWecomPlugin: ChannelPlugin<ResolvedSimpleWecomAccount> = {
         return ids;
     },
     resolveAccount: (cfg, accountId) => {
-        const simpleWecom = cfg.channels?.["simple-wecom"];
+        const simpleWecom = cfg.channels?.["openclaw-wechat"];
         const resolvedId = accountId ?? DEFAULT_ACCOUNT_ID;
         const account = simpleWecom?.accounts?.[resolvedId];
         const defaults = { ...simpleWecom };
@@ -74,7 +74,7 @@ export const simpleWecomPlugin: ChannelPlugin<ResolvedSimpleWecomAccount> = {
     sendText: async ({ to, text, accountId }) => {
         const runtime = getSimpleWecomRuntime();
         const cfg = await runtime.config.loadConfig();
-        const simpleWecom = cfg.channels?.["simple-wecom"];
+        const simpleWecom = cfg.channels?.["openclaw-wechat"];
         const resolvedId = accountId ?? DEFAULT_ACCOUNT_ID;
         const account = simpleWecom?.accounts?.[resolvedId];
         const defaults = { ...simpleWecom };
@@ -95,12 +95,12 @@ export const simpleWecomPlugin: ChannelPlugin<ResolvedSimpleWecomAccount> = {
             encodingAESKey: config.encodingAESKey
         });
 
-        return { channel: "simple-wecom", ok: true };
+        return { channel: "openclaw-wechat", ok: true };
     },
     sendMedia: async ({ to, text, mediaUrl, accountId }) => {
         const runtime = getSimpleWecomRuntime();
         const cfg = await runtime.config.loadConfig();
-        const simpleWecom = cfg.channels?.["simple-wecom"];
+        const simpleWecom = cfg.channels?.["openclaw-wechat"];
         const resolvedId = accountId ?? DEFAULT_ACCOUNT_ID;
         const account = simpleWecom?.accounts?.[resolvedId];
         const defaults = { ...simpleWecom };
@@ -121,7 +121,7 @@ export const simpleWecomPlugin: ChannelPlugin<ResolvedSimpleWecomAccount> = {
             encodingAESKey: config.encodingAESKey
         });
 
-        return { channel: "simple-wecom", ok: true };
+        return { channel: "openclaw-wechat", ok: true };
     }
   },
 };

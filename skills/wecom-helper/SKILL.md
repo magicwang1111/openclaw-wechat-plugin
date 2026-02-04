@@ -1,7 +1,7 @@
 ---
 name: wecom-helper
 description: 企业微信助手技能 - 帮助用户通过企业微信渠道进行沟通和协作
-metadata: {"openclaw":{"emoji":"💬","channel":"simple-wecom"}}
+metadata: {"openclaw":{"emoji":"💬","channel":"openclaw-wechat"}}
 ---
 
 # 企业微信助手 Skill
@@ -25,8 +25,8 @@ metadata: {"openclaw":{"emoji":"💬","channel":"simple-wecom"}}
 - **encodingAESKey**: 消息加密密钥
 
 ### API 端点
-- **接收消息**: `POST /simple-wecom/message`
-- **轮询消息**: `GET /simple-wecom/messages?email=xxx`
+- **接收消息**: `POST /openclaw-wechat/message`
+- **轮询消息**: `GET /openclaw-wechat/messages?email=xxx`
 
 ## 使用场景示例
 
@@ -36,7 +36,7 @@ metadata: {"openclaw":{"emoji":"💬","channel":"simple-wecom"}}
 响应思路：
 1. 确认收件人标识（通常是企业微信账号或邮箱）
 2. 构造消息内容
-3. 使用 simple-wecom 渠道发送
+3. 使用 openclaw-wechat 渠道发送
 
 ### 场景 2: 文件分享
 用户请求："把这个报告发给团队"
@@ -109,12 +109,12 @@ metadata: {"openclaw":{"emoji":"💬","channel":"simple-wecom"}}
 openclaw channels status
 
 # 测试发送消息
-curl -X POST http://localhost:18789/simple-wecom/message \
+curl -X POST http://localhost:18789/openclaw-wechat/message \
   -H "Content-Type: application/json" \
   -d '{"email": "test@example.com", "text": "测试消息"}'
 
 # 查看配置
-openclaw config get channels.simple-wecom
+openclaw config get channels.openclaw-wechat
 ```
 
 ## 限制和注意事项
