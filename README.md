@@ -15,7 +15,7 @@
 ### 1. 启用插件
 
 ```bash
-openclaw plugins enable simple-wecom
+openclaw plugins enable openclaw-wechat-plugin
 ```
 
 ### 2. 配置企业微信
